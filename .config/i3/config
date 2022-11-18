@@ -1,0 +1,240 @@
+# minimal i3 configurations
+# GRUVBOX theme colors are set at the end
+
+# Set mod keys (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod4
+###########
+# STARTUP #
+###########
+
+exec --no-startup-id setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle
+
+exec --no-startup-id xrandr --output HDMI1 --mode 1920x1080 --output eDP1 --mode 1920x1080 --left-of HDMI1
+
+exec --no-startup-id nitrogen --restore &
+
+exec --no-startup-id flameshot &
+
+exec --no-startup-id nm-applet
+
+exec --no-startup-id ao &
+
+exec --no-startup-id lxsession
+
+exec --no-startup-id dunst  &
+
+exec --no-startup-id picom &
+
+exec --no-startup-id blueman-applet &
+
+exec --no-startup-id dbus-update-activation-environment DISPLAY
+
+################
+# KEY BINDINGS #
+################
+
+# terminal
+bindsym $mod+Return exec --no-startup-id alacritty 
+
+# rofi
+bindsym $mod+d exec --no-startup-id rofi -show run
+
+# screenshoter
+bindsym Print exec --no-startup-id flameshot gui
+
+# bitwarden
+bindsym $mod+b exec --no-startup-id bitwarden-desktop
+
+# AO To Do
+bindsym $mod+a exec --no-startup-id ao
+
+# Telegram
+bindsym $mod+t exec --no-startup-id telegram-desktop
+
+# Pavucontrol
+bindsym $mod+p exec --no-startup-id pavucontrol
+
+# Whatsapp
+bindsym $mod+w exec --no-startup-id whatsapp-nativefier 
+
+# Whatsapp
+bindsym $mod+e exec --no-startup-id pcmanfm
+
+# chromium
+bindsym $mod+c exec --no-startup-id chromium
+
+# leafpad
+bindsym $mod+l exec --no-startup-id leafpad
+
+
+
+####################
+# FLOATING WINDOWS #
+####################
+
+# bitwarden
+for_window [class="Bitwarden"] floating enable, border normal
+
+# calculator
+for_window [class="gnome-calculator"] floating enable, border normal
+
+# ao (MS to-do)
+for_window [class="Ao"] floating enable, border normal
+
+# ao (MS to-do)
+for_window [class="TelegramDesktop"] floating enable, border normal
+
+# ao (MS to-do)
+for_window [class="Blueman-manager"] floating enable, border normal
+
+# ao (MS to-do)
+for_window [class="Pavucontrol"] floating enable, border normal
+
+# Whatsapp
+for_window [class="whatsapp-nativefier-d40211"] floating enable, border normal
+
+# pcmanfm
+for_window [class="Pcmanfm"] floating enable, border normal
+
+# pcmanfm
+for_window [class="Leafpad"] floating enable, border normal
+
+# kill container
+bindsym $mod+Shift+q kill
+# restart i3 inplace 
+bindsym $mod+Shift+r restart
+# exit i3
+bindsym $mod+Control+Escape exec i3-msg exit
+# kill xorg server
+bindsym $mod+Shift+Escape exec pkill -15 Xorg
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# vim key navigations
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# new window split direction toggle
+# bindsym $mod+t split toggle
+
+# floating windows
+floating_modifier $mod
+bindsym $mod+space floating toggle
+
+# workspace names / font-awesome
+set $ws1 "01 "
+set $ws2 "02 "
+set $ws3 "03 "
+set $ws4 "04 "
+set $ws5 "05 "
+set $ws6 "06 "
+set $ws7 "07 "
+set $ws8 "08 "
+set $ws9 "09 "
+set $wsX "10 "
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $wsX
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $wsX
+
+# Pulse Audio volume keys
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+
+# Screen brightness keys
+# (This should work for both acpilight or xbacklight.)
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+#######
+#THEME#
+#######
+
+# gaps
+gaps inner 6
+gaps outer -2
+
+# border
+default_border pixel 1
+
+# set primary gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
+# font used by i3 for titles and bars
+font pango:Hack 8
+
+#start of bar section
+bar {
+    position bottom
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    colors {
+        # bar background color
+        background $bg
+        # text color used for blocks that do not have a color specified.
+        statusline $yellow
+        # workspaces section            
+        #                    border  backgr. text
+        focused_workspace    $aqua $aqua $darkgray
+        inactive_workspace   $darkgray $darkgray $yellow
+        active_workspace     $darkgray $darkgray $yellow
+        urgent_workspace     $red $red $bg
+    }
+}
+#end of bar section
+
+#start of window title bars & borders section
+
+# green gruvbox
+# class                 border|backgr|text|indicator|child_border
+#client.focused          $green $green $darkgray $purple $darkgray
+#client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+#client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+#client.urgent           $red $red $white $red $red
+
+# blue gruvbox
+# class                 border|backgr|text|indicator|child_border
+client.focused          $blue $blue $darkgray $purple $darkgray
+client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+client.urgent           $red $red $white $red $red
+
+#end of window title bars & borders section
